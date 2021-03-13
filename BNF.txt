@@ -1,0 +1,36 @@
+Metalenguaje BNF (Forma de Backus-Naur)
+
+Palabras reservadas: Inicio, Fin, Si, Entonces
+
+<programa>::= Inicio <id_programa>
+		<sentencia>
+	      Fin
+
+<id_programa>::= <variable> 
+
+<variable>::= <primer_simb><resto_id>
+
+<resto_id>::= <resto_id> <primer_simb> | <resto_id> <digito> | <digito> <primer_simb>
+
+<primer_simb>::= <letra>
+
+<sentencias>::= <instrucciones> | <sentencias> <instrucciones>
+
+<instrucciones>::= <asignación> | <ciclo> | <condicional> | <aritmética>
+
+<asignación>::= <tipo_dato> <primer_simb><resto_id> | <tipo_dato> <primer_simb><resto_id> = <valor>
+
+<tipo_dato>::= <real> | <entero> | <cadena>
+
+<cadena>::= <letra> | <letra><cadena> 
+
+<operador>::= +|-|*|/
+
+<número>::= <dígito> | <número><dígito>
+
+<digito>::= 1|2|3|4|5|6|7|8|9|0
+
+<letra>::= a|b|c|d|e|f|g|h|i|j|k|l|m|n|ñ|o|p|q|r|s|t|u|v|w|x|y|z|A|B|C|D|E|F|G|H|I|J|K|L|M|N|Ñ|O|P|Q|R|S|T|U|V|W|X|Y|Z
+
+<valor>::= <primer_simb><resto_id> | <resto_id><primer_simb> | <digito>
+
