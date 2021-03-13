@@ -6,7 +6,7 @@ Palabras reservadas: Inicio, Fin, Si, Entonces
 		<sentencia>
 	      Fin
 
-<id_programa>::= <variable> 
+<id_programa>::= <variable>
 
 <variable>::= <primer_simb><resto_id>
 
