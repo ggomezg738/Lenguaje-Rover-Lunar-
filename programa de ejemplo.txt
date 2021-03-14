@@ -1,0 +1,40 @@
+#Programa de ejemplo
+
+#Los comentarios no son parte de la BNF, solo están para dar una idea de cómo se tienen que interpretar algunas acciones.
+
+RoverLunar{
+    var distanciaFinal = 100;
+    var distanciaActual = 0;
+
+    var foto = 0;
+    var mensaje;
+
+    girar(brazo_1,20,izquierda); #Las ruedas del brazo_1 giran 20 grados a la izquierda
+    girar(brazo_2,20,izquierda); #Las ruedas del brazo_2 giran 20 grados a la izquierda
+    
+    desplazar(0.5,adelante); #Avanza 0.5 metros.
+
+    girar(brazo_1,20,derecha); #Las ruedas del brazo_1 giran 20 grados a la derecha
+    girar(brazo_2,20,derecha); #Las ruedas del brazo_1 giran 20 grados a la derecha
+
+    extender(pedestal,0.5); #El pedestal se extiende 50 metros.
+    girar(pedestal,70,derecha); #El pedestal gira 70 grados a la derecha.
+
+    var i;
+    repetir mientras (distanciaActual < distanciaFinal){
+        i = 0;
+        repetir mientras (i<3){
+            tomarCaptura; #Toma una foto
+            foto = foto + 1;
+            girar(pedestal,70,izquierda); #El pedestal gira 70 grados a la izquierda.
+            i = i+1;
+        };
+        girar(pedestal,140,derecha);
+        desplazar(10,adelante);
+        distanciaActual = distanciaActual + 10;
+    };
+
+    si (foto==10) entonces {
+        mensaje = Exito;
+    };
+}

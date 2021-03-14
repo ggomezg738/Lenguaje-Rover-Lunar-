@@ -1,36 +1,61 @@
-Metalenguaje BNF (Forma de Backus-Naur)
+<programa>::= <identificador><bloque>
+<bloque>::= '{'<conjunto de lineas>'}'
+<conjunto de lineas> ::= <linea> | <conjunto de lineas><linea>
+<linea> ::= <declaracion de variable><fin de linea> | <linea><instruccion> | <instruccion><fin de linea> | <fin de linea>
+<fin de linea>::= ';'
 
-Palabras reservadas: Inicio, Fin, Si, Entonces
+<instruccion>::= <ciclo>|<decision>|<condicional>|<operacion>|<asignador de variable>|<accion>
+<ciclo>::= 'repetir mientras '<condicional><bloque>
+<decision>::= 'si '<condicional>' entonces'<bloque>
+<condicional>::= '('<booleano>')'
 
-<programa>::= Inicio <id_programa>
-		<sentencia>
-	      Fin
+<booleano>::= 'true'| 'false' | <valor><operdador booleano><valor>
+<operdador booleano>::= '=='|'!='|'>='|'<='|'<'|'>'
 
-<id_programa>::= <variable>
+<valor>::= <identificador>|<numero>|<cadena>
+<numero>::= <real>|<entero>
+<numero sin signo>::= <real sin signo> | <entero sin signo>
 
-<variable>::= <primer_simb><resto_id>
+<expresion>::= <identificador>|<numero>|<operacion>
 
-<resto_id>::= <resto_id> <primer_simb> | <resto_id> <digito> | <digito> <primer_simb>
+<declaracion de variable> ::= 'var ' <identificador>'='<inicializador variable> | 'var ' <identificador>
+<asignador de variable> ::= <identificador>'='<inicializador variable>
+<inicializador variable> ::= <valor> | <operacion>
+<identificador> ::= <cadena>
+<cadena> ::= <letra> | <cadena><letra> | <cadena><entero sin signo>
+<letra> ::= 'a'|'b'|'c'|'d'|'e'|'f'|'g'|'h'|'i'|'j'|'k'|'l'|'m'|'n'|'ñ'|'o'|'p'|'q'|'r'|'s'|'t'|'u'|'v'|'w'|'x'|'y'|'z'|'A'|'B'|'C'|'D'|'E'|'F'|'G'|'H'|'I'|'J'|'K'|'L'|'M'|'N'|'Ñ'|'O'|'P'|'Q'|'R'|'S'|'T'|'U'|'V'|'W'|'X'|'Y'|'Z'
 
-<primer_simb>::= <letra>
+<operacion> ::= <suma>|<multiplicacion>
+<suma>::= <valor><operdador suma><valor> | <valor><operador suma><operacion>
+<multiplicacion>::= <valor><operdador multiplicacion><valor> | <valor><operador multiplicacion><operacion>
+<operdador suma> ::= '+'|'-'
+<operador multiplicacion>'/'|'*'
 
-<sentencias>::= <instrucciones> | <sentencias> <instrucciones>
+<real>::= <entero>'.'<entero signo>
+<real sin signo>::= <entero sin signo>'.'<entero sin signo>
 
-<instrucciones>::= <asignación> | <ciclo> | <condicional> | <aritmética>
+<entero>::= <entero positivo>|<entero negativo>
+<entero positivo>::= '+'<entero sin signo> | <entero sin signo>
+<entero negativo>::= '-'<entero sin signo>
+<entero sin signo>::= <digito> | <entero sin signo><digito> 
+<digito>::='1'|'2'|'3'|'4'|'5'|'6'|'7'|'8'|'8'|'9'|'0'
 
-<asignación>::= <tipo_dato> <primer_simb><resto_id> | <tipo_dato> <primer_simb><resto_id> = <valor>
+#Rover
+<accion>::= <desplazar>|<retraer>|<extender>|<girar>|<inclinar>|'tomarCaptura'
+<direccion>::= 'adelante'|'atras'|'derecha'|'izquierda'
 
-<tipo_dato>::= <real> | <entero> | <cadena>
+<parte>::= <parte de movimiento>|<parte de imagen>
+<parte de movimiento>::= <rueda>|<brazo>
+<rueda>::= 'rueda_1'|'rueda_2'|'rueda_3'|'rueda_4'|'rueda_5'|'rueda_6'
+<brazo>::= 'brazo_1'|'brazo_2'
 
-<cadena>::= <letra> | <letra><cadena> 
+<parte de imagen>::= <camara>|<pedestal>
+<camara>::= 'camara'
+<pedestal>::= 'pedestal'
 
-<operador>::= +|-|*|/
+<retraer>::= 'retraer('<pedestal>','<expresion>')'
+<extender>::= 'extender('<pedestal>','<expresion>')'
+<girar>::= 'girar('<parte>','<expresion>','<direccion>')'
+<inclinar>::= 'inclinar('<parte de imagen>','<expresion>','<direccion>')'
 
-<número>::= <dígito> | <número><dígito>
-
-<digito>::= 1|2|3|4|5|6|7|8|9|0
-
-<letra>::= a|b|c|d|e|f|g|h|i|j|k|l|m|n|ñ|o|p|q|r|s|t|u|v|w|x|y|z|A|B|C|D|E|F|G|H|I|J|K|L|M|N|Ñ|O|P|Q|R|S|T|U|V|W|X|Y|Z
-
-<valor>::= <primer_simb><resto_id> | <resto_id><primer_simb> | <digito>
-
+<desplazar>::= 'desplazar('<expresion>','<direccion>')' | 'desplazar('<parte de movimiento>','<expresion>','<direccion>')'
