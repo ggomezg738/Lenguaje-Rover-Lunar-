@@ -1,0 +1,35 @@
+RoverLunar{
+    var distanciaFinal = 100;
+    var distanciaActual = 0;
+
+    var foto = 0;
+    var mensaje;
+
+    girar(brazo_1,20,izquierda); 
+    girar(brazo_2,20,izquierda);
+    
+    desplazar(0.5,adelante);
+    girar(brazo_1,20,derecha);
+    girar(brazo_2,20,derecha);
+
+    extender(pedestal,0.5);
+    girar(pedestal,70,derecha);
+
+    var i;
+    repetir mientras (distanciaActual < distanciaFinal){
+        i = 0;
+        repetir mientras (i<3){
+            tomarCaptura;
+            foto = foto + 1;
+            girar(pedestal,70,izquierda);
+            i = i+1;
+        };
+        girar(pedestal,140,derecha);
+        desplazar(10,adelante);
+        distanciaActual = distanciaActual + 10;
+    };
+
+    si (foto==10) entonces {
+        mensaje = Exito;
+    };
+}
