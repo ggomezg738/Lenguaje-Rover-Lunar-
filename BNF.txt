@@ -1,18 +1,19 @@
-<programa>::= <identificador><bloque>
+<programa>::= <identificador><bloque><fin de archivo>
 <bloque>::= '{'<conjunto de lineas>'}'
 <conjunto de lineas> ::= <linea> | <conjunto de lineas><linea>
 <linea> ::= <declaracion de variable><fin de linea> | <linea><instruccion> | <instruccion><fin de linea> | <fin de linea>
 <fin de linea>::= ';'
+<fin de archivo>::= '@'
 
 <instruccion>::= <ciclo>|<decision>|<condicional>|<operacion>|<asignador de variable>|<accion>
 <ciclo>::= 'repetir mientras '<condicional><bloque>
 <decision>::= 'si '<condicional>' entonces'<bloque>
 <condicional>::= '('<booleano>')'
 
-<booleano>::= 'true'| 'false' | <valor><operdador booleano><valor>
-<operdador booleano>::= '=='|'!='|'>='|'<='|'<'|'>'
+<booleano>::= 'true'| 'false' | <valor><operador booleano><valor>
+<operador booleano>::= '=='|'!='|'>='|'<='|'<'|'>'
 
-<valor>::= <identificador>|<numero>|<cadena>
+<valor>::= <identificador>|<numero>|<cadena>|<booleano>
 <numero>::= <real>|<entero>
 <numero sin signo>::= <real sin signo> | <entero sin signo>
 
@@ -23,13 +24,13 @@
 <inicializador variable> ::= <valor> | <operacion>
 <identificador> ::= <cadena>
 <cadena> ::= <letra> | <cadena><letra> | <cadena><entero sin signo>
-<letra> ::= 'a'|'b'|'c'|'d'|'e'|'f'|'g'|'h'|'i'|'j'|'k'|'l'|'m'|'n'|'ñ'|'o'|'p'|'q'|'r'|'s'|'t'|'u'|'v'|'w'|'x'|'y'|'z'|'A'|'B'|'C'|'D'|'E'|'F'|'G'|'H'|'I'|'J'|'K'|'L'|'M'|'N'|'Ñ'|'O'|'P'|'Q'|'R'|'S'|'T'|'U'|'V'|'W'|'X'|'Y'|'Z'
+<letra> ::= 'a'|'b'|'c'|'d'|'e'|'f'|'g'|'h'|'i'|'j'|'k'|'l'|'m'|'n'|'o'|'p'|'q'|'r'|'s'|'t'|'u'|'v'|'w'|'x'|'y'|'z'|'A'|'B'|'C'|'D'|'E'|'F'|'G'|'H'|'I'|'J'|'K'|'L'|'M'|'N'|'O'|'P'|'Q'|'R'|'S'|'T'|'U'|'V'|'W'|'X'|'Y'|'Z'
 
 <operacion> ::= <suma>|<multiplicacion>
-<suma>::= <valor><operdador suma><valor> | <valor><operador suma><operacion>
-<multiplicacion>::= <valor><operdador multiplicacion><valor> | <valor><operador multiplicacion><operacion>
-<operdador suma> ::= '+'|'-'
-<operador multiplicacion>'/'|'*'
+<suma>::= <valor><operador suma><valor> | <valor><operador suma><operacion>
+<multiplicacion>::= <valor><operador multiplicacion><valor> | <valor><operador multiplicacion><operacion>
+<operador suma> ::= '+'|'-'
+<operador multiplicacion> ::= '/'|'*'
 
 <real>::= <entero>'.'<entero signo>
 <real sin signo>::= <entero sin signo>'.'<entero sin signo>
@@ -46,8 +47,8 @@
 
 <parte>::= <parte de movimiento>|<parte de imagen>
 <parte de movimiento>::= <rueda>|<brazo>
-<rueda>::= 'rueda_1'|'rueda_2'|'rueda_3'|'rueda_4'|'rueda_5'|'rueda_6'
-<brazo>::= 'brazo_1'|'brazo_2'
+<rueda>::= 'ruedaA'|'ruedaB'|'ruedaC'|'ruedaD'|'ruedaE'|'ruedaF'
+<brazo>::= 'brazoA'|'brazoB'
 
 <parte de imagen>::= <camara>|<pedestal>
 <camara>::= 'camara'
@@ -55,7 +56,7 @@
 
 <retraer>::= 'retraer('<pedestal>','<expresion>')'
 <extender>::= 'extender('<pedestal>','<expresion>')'
-<girar>::= 'girar('<parte>','<expresion>','<direccion>')'
-<inclinar>::= 'inclinar('<parte de imagen>','<expresion>','<direccion>')'
+<girar>::= 'girar('<parte>','<direccion>','<expresion>')'
+<inclinar>::= 'inclinar('<parte de imagen>','<direccion>','<expresion>')'
 
-<desplazar>::= 'desplazar('<expresion>','<direccion>')' | 'desplazar('<parte de movimiento>','<expresion>','<direccion>')'
+<desplazar>::= 'desplazar('<direccion>','<expresion>')' | 'desplazar('<parte de movimiento>','<direccion>','<expresion>')'
