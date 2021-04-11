@@ -1,5 +1,5 @@
 RoverLunar{
-    var distanciaFinal = 100+distanciaFinal+10;
+    var distanciaFinal = 100;
     var distanciaActual = 0;
 
     var foto = 0;
