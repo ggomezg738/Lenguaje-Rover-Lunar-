@@ -22,6 +22,7 @@ bool digitoValido(char ch){
 	return false;
 }
 
+//Verifica si la siguiente palabra será de tipo booleano (true o false)
 int palabraReservadaBool(string tabla[2][30],string palabra,char ch){
 	palabra += ch;
 	if (palabra.compare(tabla[0][11])==0){ //Si es true
@@ -35,11 +36,13 @@ int palabraReservadaBool(string tabla[2][30],string palabra,char ch){
 	return -1; // Si no es true ni false.
 }
 
+//Compara la siguiente palabra con otra.
 int compararPalabra(string enTabla,string palabra, char ch){
 	palabra += ch;
 	return palabra.compare(enTabla);
 }
 
+//Verifica si la siguiente palabra es una palabra reservada.
 int esReservada(string tabla[2][30],string palabra,char ch){
 	palabra += ch;
 	int result = -1;
@@ -51,7 +54,7 @@ int esReservada(string tabla[2][30],string palabra,char ch){
 	}
 	return -1;
 }
-
+//Verifica si una palabra es una palabra reservada.
 int esReservada(string tabla[2][30],string palabra){
 	int result = -1;
 	for (int i = 0; i <=30; i++){
@@ -62,7 +65,7 @@ int esReservada(string tabla[2][30],string palabra){
 	}
 	return -1;
 }
-
+//Verifica si la siguiente palabra es un identificador ya creado.
 int esIdentificador(string tabla[2][30],string palabra,char ch){
 	palabra += ch;
 	int result = -1;
@@ -74,7 +77,7 @@ int esIdentificador(string tabla[2][30],string palabra,char ch){
 	}
 	return -1;
 }
-
+//Verifica si una palabra es un identificador ya creado.
 int esIdentificador(string tabla[2][30],string palabra){
 	int result = -1;
 	for (int i = 0; i <=30; i++){
@@ -110,13 +113,25 @@ int esParte(string tabla[2][30],string palabra,char ch){
 	return -1;
 }
 
+int esParteMovimiento(string tabla[2][30],string palabra,char ch){
+	palabra += ch;
+	int result = -1;
+	for (int i = 15; i <=22; i++){
+		result = tabla[0][i].compare(palabra);
+		if (result == 0){
+			return 0;
+		}
+	}
+	return -1;
+}
+
 
 
 
 int main() {
 	
 	//tipo de dato estados
-    enum TEstado {q0,q1,q2,q3,q4,q5,q6,q7,q8,q9,q10,q11,q12,q13,q14,q15,q16,q17,q18,q19,q20,q21,q22,q23,q24,q25,q26,q27,q28,q29,q30,q31,q32,q33,q34,q35,q36,q37,q38a,q38b,q39,q40,q41,q42,q43,q44,q45,q46,q47,q48,q49,q50,q51,q52,q53,q54,q55,q56,q57a,q57b,q58,q59,q60,q61,q62,q63,qe};
+    enum TEstado {q0,q1,q2,q3,q4,q5,q6,q7,q8,q9,q10,q11,q12,q13,q14,q15,q16,q17,q18,q19,q20,q21,q22,q23,q24,q25,q26,q27,q28,q29,q30,q31,q32,q33,q34,q35,q36,q37,q38a,q38b,q39,q40,q41,q42,q43,q44,q45,q46,q47,q48,q49,q50,q51,q52,q53,q54,q55,q56,q57a,q57b,q58,q59,q60,q61,q62,q63,q64,q65,q66,q67,q68,q69,q70,qe};
 
     //vaiable estados
     TEstado Estado = q0;
@@ -227,7 +242,9 @@ int main() {
 					palabra +=ch;
 					cout<<"q2->q3: "<<ch<<endl;
 				} else if (ch == '}'){
-                    //Estado = q61;
+                    Estado = q69;
+					cout<<"q2->q69: "<<ch<<endl;
+					llavesCerradas++;
                 }else{
 					Estado = qe;
                 	cout << "q2 -> qe Se esperaba una letra o }." << endl;
@@ -240,6 +257,46 @@ int main() {
             		cout<<"q3->q4: "<<palabra<<" Declaracion de variable."<<endl;
 					palabrasReservadasVar++;
 					palabra = "";
+				}else if(compararPalabra(tabla[0][1],palabra,ch)==0){ // girar
+					Estado = q59;
+            		palabra += ch;
+            		cout<<"q3->q59: "<<palabra<<" Palabra reservada."<<endl;
+					palabra = "";
+				}else if(compararPalabra(tabla[0][2],palabra,ch)==0){ // tomarCaptura
+					Estado = q12;
+            		palabra += ch;
+            		cout<<"q3->q12: "<<palabra<<" Palabra reservada."<<endl;
+					palabra = "";
+				}else if(compararPalabra(tabla[0][3],palabra,ch)==0 || compararPalabra(tabla[0][4],palabra,ch)==0){ //retraer o extender
+					Estado = q43;
+            		palabra += ch;
+            		cout<<"q3->q43: "<<palabra<<" Palabra reservada."<<endl;
+					palabra = "";
+				}else if(compararPalabra(tabla[0][5],palabra,ch)==0){ // inclinar
+					Estado = q53;
+            		palabra += ch;
+            		cout<<"q3->q53: "<<palabra<<" Palabra reservada."<<endl;
+					palabra = "";
+				}else if(compararPalabra(tabla[0][6],palabra,ch)==0){ // girar
+					Estado = q59;
+            		palabra += ch;
+            		cout<<"q3->q59: "<<palabra<<" Palabra reservada."<<endl;
+					palabra = "";
+				}else if(compararPalabra(tabla[0][7],palabra,ch)==0){ // desplazar
+					Estado = q63;
+            		palabra += ch;
+            		cout<<"q3->q63: "<<palabra<<" Palabra reservada."<<endl;
+					palabra = "";
+				}else if(compararPalabra(tabla[0][8],palabra,ch)==0){ // repetirmientras
+					Estado = q13;
+            		palabra += ch;
+            		cout<<"q3->q13: "<<palabra<<" Palabra reservada."<<endl;
+					palabra = "";
+				}else if(compararPalabra(tabla[0][9],palabra,ch)==0){ // si
+					Estado = q28;
+            		palabra += ch;
+            		cout<<"q3->q28: "<<palabra<<" Palabra reservada."<<endl;
+					palabra = "";																
 				}else if(letraValida(ch)){
                     Estado = q3;
 					palabra += ch;
@@ -332,22 +389,22 @@ int main() {
 					cout << "Numero decimal." << endl;
 				} else if (ch == '+'){
 					Estado = q6;
-					cout << "Operaci�n de suma al numero: "<<palabra<<endl;
+					cout << "Operacion de suma al numero: "<<palabra<<endl;
 					palabra = "";
 					operadoresSuma++;
 				} else if (ch == '-'){
 					Estado = q6;
-					cout << "Operaci�n de resta al numero: "<<palabra<<endl;
+					cout << "Operacion de resta al numero: "<<palabra<<endl;
 					palabra = "";
 					operadoresResta++;
 				} else if (ch == '*'){
 					Estado = q6;
-					cout << "Operaci�n de multiplicacion al numero: "<<palabra<<endl;
+					cout << "Operacion de multiplicacion al numero: "<<palabra<<endl;
 					palabra = "";
 					operadoresMultiplicacion++;
 				} else if (ch == '/'){
 					Estado = q6;
-					cout << "Operaci�n de division al numero: "<<palabra<<endl;
+					cout << "Operacion de division al numero: "<<palabra<<endl;
 					palabra = "";
 					operadoresDivision++;
 				} else if (ch == ';'){
@@ -374,22 +431,22 @@ int main() {
 					palabra += ch;
 				} else if (ch == '+'){
 					Estado = q6;
-					cout << "Operaci�n de suma al numero: "<<palabra<<endl;
+					cout << "Operacion de suma al numero: "<<palabra<<endl;
 					palabra = "";
 					operadoresSuma++;
 				} else if (ch == '-'){
 					Estado = q6;
-					cout << "Operaci�n de resta al numero: "<<palabra<<endl;
+					cout << "Operacion de resta al numero: "<<palabra<<endl;
 					palabra = "";
 					operadoresResta++;
 				} else if (ch == '*'){
 					Estado = q6;
-					cout << "Operaci�n de multiplicacion al numero: "<<palabra<<endl;
+					cout << "Operacion de multiplicacion al numero: "<<palabra<<endl;
 					palabra = "";
 					operadoresMultiplicacion++;
 				} else if (ch == '/'){
 					Estado = q6;
-					cout << "Operaci�n de division al numero: "<<palabra<<endl;
+					cout << "Operacion de division al numero: "<<palabra<<endl;
 					palabra = "";
 					operadoresDivision++;
 				} else if (ch == ';'){
@@ -419,22 +476,22 @@ int main() {
 					palabra += ch;
 				} else if (ch == '+'){
 					Estado = q6;
-					cout << "Operaci�n de suma al identificador: "<<palabra<<endl;
+					cout << "Operacion de suma al identificador: "<<palabra<<endl;
 					palabra = "";
 					operadoresSuma++;
 				} else if (ch == '-'){
 					Estado = q6;
-					cout << "Operaci�n de resta al identificador: "<<palabra<<endl;
+					cout << "Operacion de resta al identificador: "<<palabra<<endl;
 					palabra = "";
 					operadoresResta++;
 				} else if (ch == '*'){
 					Estado = q6;
-					cout << "Operaci�n de multiplicacion al identificador: "<<palabra<<endl;
+					cout << "Operacion de multiplicacion al identificador: "<<palabra<<endl;
 					palabra = "";
 					operadoresMultiplicacion++;
 				} else if (ch == '/'){
 					Estado = q6;
-					cout << "Operaci�n de division al identificador: "<<palabra<<endl;
+					cout << "Operacion de division al identificador: "<<palabra<<endl;
 					palabra = "";
 					operadoresDivision++;
 				} else if (ch == ';'){
@@ -475,7 +532,7 @@ int main() {
 			case q13:
 				if (ch == '('){
 					Estado = q14;
-					cout << "q 13Parentesis abierto."<<endl;
+					cout << "q13 -> q14 Parentesis abierto."<<endl;
 					parentesisAbiertos++;
 					palabra = "";
 				} else {
@@ -513,22 +570,22 @@ int main() {
 					cout << "Numero decimal." << endl;
 				} else if (ch == '+'){
 					Estado = q14;
-					cout << "Operaci�n de suma al numero: "<<palabra<<endl;
+					cout << "Operacion de suma al numero: "<<palabra<<endl;
 					palabra = "";
 					operadoresSuma++;
 				} else if (ch == '-'){
 					Estado = q14;
-					cout << "Operaci�n de resta al numero: "<<palabra<<endl;
+					cout << "Operacion de resta al numero: "<<palabra<<endl;
 					palabra = "";
 					operadoresResta++;
 				} else if (ch == '*'){
 					Estado = q14;
-					cout << "Operaci�n de multiplicacion al numero: "<<palabra<<endl;
+					cout << "Operacion de multiplicacion al numero: "<<palabra<<endl;
 					palabra = "";
 					operadoresMultiplicacion++;
 				} else if (ch == '/'){
 					Estado = q14;
-					cout << "Operaci�n de division al numero: "<<palabra<<endl;
+					cout << "Operacion de division al numero: "<<palabra<<endl;
 					palabra = "";
 					operadoresDivision++;
 				} else if (ch == '=' || ch == '!'){
@@ -561,22 +618,22 @@ int main() {
 					palabra += ch;
 				} else if (ch == '+'){
 					Estado = q14;
-					cout << "Operaci�n de suma al numero: "<<palabra<<endl;
+					cout << "Operacion de suma al numero: "<<palabra<<endl;
 					palabra = "";
 					operadoresSuma++;
 				} else if (ch == '-'){
 					Estado = q14;
-					cout << "Operaci�n de resta al numero: "<<palabra<<endl;
+					cout << "Operacion de resta al numero: "<<palabra<<endl;
 					palabra = "";
 					operadoresResta++;
 				} else if (ch == '*'){
 					Estado = q14;
-					cout << "Operaci�n de multiplicacion al numero: "<<palabra<<endl;
+					cout << "Operacion de multiplicacion al numero: "<<palabra<<endl;
 					palabra = "";
 					operadoresMultiplicacion++;
 				} else if (ch == '/'){
 					Estado = q14;
-					cout << "Operaci�n de division al numero: "<<palabra<<endl;
+					cout << "Operacion de division al numero: "<<palabra<<endl;
 					palabra = "";
 					operadoresDivision++;
 				} else if (ch == '=' || ch == '!'){
@@ -598,7 +655,7 @@ int main() {
 				if (ch == '='){
 					Estado = q19;
 					palabra += ch;
-					cout << "q18 -> 19 Operador booleano: "<<palabra<<endl;
+					cout << "q18 -> q19 Operador booleano: "<<palabra<<endl;
 					palabra = "";
 				}else{
 					Estado = qe;
@@ -635,22 +692,22 @@ int main() {
 					cout << "Numero decimal." << endl;
 				} else if (ch == '+'){
 					Estado = q19;
-					cout << "Operaci�n de suma al numero: "<<palabra<<endl;
+					cout << "Operacion de suma al numero: "<<palabra<<endl;
 					palabra = "";
 					operadoresSuma++;
 				} else if (ch == '-'){
 					Estado = q19;
-					cout << "Operaci�n de resta al numero: "<<palabra<<endl;
+					cout << "Operacion de resta al numero: "<<palabra<<endl;
 					palabra = "";
 					operadoresResta++;
 				} else if (ch == '*'){
 					Estado = q19;
-					cout << "Operaci�n de multiplicacion al numero: "<<palabra<<endl;
+					cout << "Operacion de multiplicacion al numero: "<<palabra<<endl;
 					palabra = "";
 					operadoresMultiplicacion++;
 				} else if (ch == '/'){
 					Estado = q19;
-					cout << "Operaci�n de division al numero: "<<palabra<<endl;
+					cout << "Operacion de division al numero: "<<palabra<<endl;
 					palabra = "";
 					operadoresDivision++;
 				} else if (ch == ')'){
@@ -678,22 +735,22 @@ int main() {
 					palabra += ch;
 				} else if (ch == '+'){
 					Estado = q19;
-					cout << "Operaci�n de suma al numero: "<<palabra<<endl;
+					cout << "Operacion de suma al numero: "<<palabra<<endl;
 					palabra = "";
 					operadoresSuma++;
 				} else if (ch == '-'){
 					Estado = q19;
-					cout << "Operaci�n de resta al numero: "<<palabra<<endl;
+					cout << "Operacion de resta al numero: "<<palabra<<endl;
 					palabra = "";
 					operadoresResta++;
 				} else if (ch == '*'){
 					Estado = q19;
-					cout << "Operaci�n de multiplicacion al numero: "<<palabra<<endl;
+					cout << "Operacion de multiplicacion al numero: "<<palabra<<endl;
 					palabra = "";
 					operadoresMultiplicacion++;
 				} else if (ch == '/'){
 					Estado = q19;
-					cout << "Operaci�n de division al numero: "<<palabra<<endl;
+					cout << "Operacion de division al numero: "<<palabra<<endl;
 					palabra = "";
 					operadoresDivision++;
 				} else if (ch == ')'){
@@ -736,32 +793,32 @@ int main() {
 				} else if (esReservada(tabla,palabra) != 0){
 					if (ch == '+'){
 						Estado = q14;
-						cout << "Operaci�n de suma a: "<<palabra<<endl;
+						cout << "Operacion de suma a: "<<palabra<<endl;
 						palabra = "";
 						operadoresSuma++;
 					} else if (ch == '-'){
 						Estado = q14;
-						cout << "Operaci�n de resta a: "<<palabra<<endl;
+						cout << "Operacion de resta a: "<<palabra<<endl;
 						palabra = "";
 						operadoresResta++;
 					} else if (ch == '*'){
 						Estado = q14;
-						cout << "Operaci�n de multiplicacion a: "<<palabra<<endl;
+						cout << "Operacion de multiplicacion a: "<<palabra<<endl;
 						palabra = "";
 						operadoresMultiplicacion++;
 					} else if (ch == '/'){					
 						Estado = q14;
-						cout << "Operaci�n de division a: "<<palabra<<endl;
+						cout << "Operacion de division a: "<<palabra<<endl;
 						palabra = "";
 						operadoresDivision++;
 					} else if (ch == '=' || ch == '!'){
 						Estado = q18;
-						cout << "q18 Inicio de operador booleano despues de: "<<palabra<<endl;
+						cout << "q24 -> q18 Inicio de operador booleano " <<ch<< " despues de: "<<palabra<<endl;
 						palabra = "";
 						palabra += ch;
 					} else if (ch == '<' || ch == '>'){
 						Estado = q25;
-						cout << "q18 Inicio de operador booleano despues de: "<<palabra<<endl;
+						cout << "q24 -> q18 Inicio de operador booleano " <<ch<< " despues de: "<<palabra<<endl;
 						palabra = "";
 						palabra += ch;
 					} else {
@@ -776,7 +833,21 @@ int main() {
 				}
 				break;
 			case q25:
-				if (letraValida(ch)){
+				if (digitoValido(ch)){
+					Estado = q20;
+					cout<<"q25 -> q20: "<<ch<<endl;
+					palabra += ch;
+				} else if(ch=='+'){
+					Estado = q20;
+					cout<<"q25 -> q20: "<<ch<<endl;
+					palabra += ch;
+					operadoresSuma++;
+				}else if(ch=='-'){
+					Estado = q20;
+					cout<<"q25 -> q20: "<<ch<<endl;
+					palabra += ch;
+					operadoresResta++;
+				} else if (letraValida(ch)){
 					Estado = q26;
 					palabra += ch;
 					cout<<"q25 -> q26: "<<ch<<endl;
@@ -797,22 +868,22 @@ int main() {
 						palabra = "";
 					} else if (ch == '+'){
 						Estado = q19;
-						cout << "Operaci�n de suma a: "<<palabra<<endl;
+						cout << "Operacion de suma a: "<<palabra<<endl;
 						palabra = "";
 						operadoresSuma++;
 					} else if (ch == '-'){
 						Estado = q19;
-						cout << "Operaci�n de resta a: "<<palabra<<endl;
+						cout << "Operacion de resta a: "<<palabra<<endl;
 						palabra = "";
 						operadoresResta++;
 					} else if (ch == '*'){
 						Estado = q19;
-						cout << "Operaci�n de multiplicacion a: "<<palabra<<endl;
+						cout << "Operacion de multiplicacion a: "<<palabra<<endl;
 						palabra = "";
 						operadoresMultiplicacion++;
 					} else if (ch == '/'){					
 						Estado = q19;
-						cout << "Operaci�n de division a: "<<palabra<<endl;
+						cout << "Operacion de division a: "<<palabra<<endl;
 						palabra = "";
 						operadoresDivision++;
 					} else {
@@ -878,22 +949,22 @@ int main() {
 					cout << "Numero decimal." << endl;
 				} else if (ch == '+'){
 					Estado = q29;
-					cout << "Operaci�n de suma al numero: "<<palabra<<endl;
+					cout << "Operacion de suma al numero: "<<palabra<<endl;
 					palabra = "";
 					operadoresSuma++;
 				} else if (ch == '-'){
 					Estado = q29;
-					cout << "Operaci�n de resta al numero: "<<palabra<<endl;
+					cout << "Operacion de resta al numero: "<<palabra<<endl;
 					palabra = "";
 					operadoresResta++;
 				} else if (ch == '*'){
 					Estado = q29;
-					cout << "Operaci�n de multiplicacion al numero: "<<palabra<<endl;
+					cout << "Operacion de multiplicacion al numero: "<<palabra<<endl;
 					palabra = "";
 					operadoresMultiplicacion++;
 				} else if (ch == '/'){
 					Estado = q29;
-					cout << "Operaci�n de division al numero: "<<palabra<<endl;
+					cout << "Operacion de division al numero: "<<palabra<<endl;
 					palabra = "";
 					operadoresDivision++;
 				} else if (ch == '=' || ch == '!'){
@@ -926,22 +997,22 @@ int main() {
 					palabra += ch;
 				} else if (ch == '+'){
 					Estado = q29;
-					cout << "Operaci�n de suma al numero: "<<palabra<<endl;
+					cout << "Operacion de suma al numero: "<<palabra<<endl;
 					palabra = "";
 					operadoresSuma++;
 				} else if (ch == '-'){
 					Estado = q29;
-					cout << "Operaci�n de resta al numero: "<<palabra<<endl;
+					cout << "Operacion de resta al numero: "<<palabra<<endl;
 					palabra = "";
 					operadoresResta++;
 				} else if (ch == '*'){
 					Estado = q29;
-					cout << "Operaci�n de multiplicacion al numero: "<<palabra<<endl;
+					cout << "Operacion de multiplicacion al numero: "<<palabra<<endl;
 					palabra = "";
 					operadoresMultiplicacion++;
 				} else if (ch == '/'){
 					Estado = q29;
-					cout << "Operaci�n de division al numero: "<<palabra<<endl;
+					cout << "Operacion de division al numero: "<<palabra<<endl;
 					palabra = "";
 					operadoresDivision++;
 				} else if (ch == '=' || ch == '!'){
@@ -1000,22 +1071,22 @@ int main() {
 					cout << "Numero decimal." << endl;
 				} else if (ch == '+'){
 					Estado = q34;
-					cout << "Operaci�n de suma al numero: "<<palabra<<endl;
+					cout << "Operacion de suma al numero: "<<palabra<<endl;
 					palabra = "";
 					operadoresSuma++;
 				} else if (ch == '-'){
 					Estado = q34;
-					cout << "Operaci�n de resta al numero: "<<palabra<<endl;
+					cout << "Operacion de resta al numero: "<<palabra<<endl;
 					palabra = "";
 					operadoresResta++;
 				} else if (ch == '*'){
 					Estado = q34;
-					cout << "Operaci�n de multiplicacion al numero: "<<palabra<<endl;
+					cout << "Operacion de multiplicacion al numero: "<<palabra<<endl;
 					palabra = "";
 					operadoresMultiplicacion++;
 				} else if (ch == '/'){
 					Estado = q34;
-					cout << "Operaci�n de division al numero: "<<palabra<<endl;
+					cout << "Operacion de division al numero: "<<palabra<<endl;
 					palabra = "";
 					operadoresDivision++;
 				} else if (ch == ')'){
@@ -1043,22 +1114,22 @@ int main() {
 					palabra += ch;
 				} else if (ch == '+'){
 					Estado = q34;
-					cout << "Operaci�n de suma al numero: "<<palabra<<endl;
+					cout << "Operacion de suma al numero: "<<palabra<<endl;
 					palabra = "";
 					operadoresSuma++;
 				} else if (ch == '-'){
 					Estado = q34;
-					cout << "Operaci�n de resta al numero: "<<palabra<<endl;
+					cout << "Operacion de resta al numero: "<<palabra<<endl;
 					palabra = "";
 					operadoresResta++;
 				} else if (ch == '*'){
 					Estado = q34;
-					cout << "Operaci�n de multiplicacion al numero: "<<palabra<<endl;
+					cout << "Operacion de multiplicacion al numero: "<<palabra<<endl;
 					palabra = "";
 					operadoresMultiplicacion++;
 				} else if (ch == '/'){
 					Estado = q34;
-					cout << "Operaci�n de division al numero: "<<palabra<<endl;
+					cout << "Operacion de division al numero: "<<palabra<<endl;
 					palabra = "";
 					operadoresDivision++;
 				} else if (ch == ')'){
@@ -1082,8 +1153,9 @@ int main() {
 				}
 				break;
 			case q38b:
-				if (palabra.compare(tabla[0][10])==0){
+				if (compararPalabra(tabla[0][10],palabra,ch)==0){
 					Estado = q23;
+					palabra += ch;
 					cout<<"q38 -> q23: palabra reservada "<<palabra<<endl;
 					palabra = "";
 				} else if (letraValida(ch)){
@@ -1113,22 +1185,22 @@ int main() {
 				} else if (esReservada(tabla,palabra) != 0){
 					if (ch == '+'){
 						Estado = q29;
-						cout << "Operaci�n de suma a: "<<palabra<<endl;
+						cout << "Operacion de suma a: "<<palabra<<endl;
 						palabra = "";
 						operadoresSuma++;
 					} else if (ch == '-'){
 						Estado = q29;
-						cout << "Operaci�n de resta a: "<<palabra<<endl;
+						cout << "Operacion de resta a: "<<palabra<<endl;
 						palabra = "";
 						operadoresResta++;
 					} else if (ch == '*'){
 						Estado = q29;
-						cout << "Operaci�n de multiplicacion a: "<<palabra<<endl;
+						cout << "Operacion de multiplicacion a: "<<palabra<<endl;
 						palabra = "";
 						operadoresMultiplicacion++;
 					} else if (ch == '/'){					
 						Estado = q29;
-						cout << "Operaci�n de division a: "<<palabra<<endl;
+						cout << "Operacion de division a: "<<palabra<<endl;
 						palabra = "";
 						operadoresDivision++;
 					} else if (ch == '=' || ch == '!'){
@@ -1185,22 +1257,22 @@ int main() {
 						palabra = "";
 					} else if (ch == '+'){
 						Estado = q34;
-						cout << "Operaci�n de suma a: "<<palabra<<endl;
+						cout << "Operacion de suma a: "<<palabra<<endl;
 						palabra = "";
 						operadoresSuma++;
 					} else if (ch == '-'){
 						Estado = q34;
-						cout << "Operaci�n de resta a: "<<palabra<<endl;
+						cout << "Operacion de resta a: "<<palabra<<endl;
 						palabra = "";
 						operadoresResta++;
 					} else if (ch == '*'){
 						Estado = q34;
-						cout << "Operaci�n de multiplicacion a: "<<palabra<<endl;
+						cout << "Operacion de multiplicacion a: "<<palabra<<endl;
 						palabra = "";
 						operadoresMultiplicacion++;
 					} else if (ch == '/'){					
 						Estado = q34;
-						cout << "Operaci�n de division a: "<<palabra<<endl;
+						cout << "Operacion de division a: "<<palabra<<endl;
 						palabra = "";
 						operadoresDivision++;
 					} else {
@@ -1534,7 +1606,103 @@ int main() {
 					Estado = qe;
 					cout << "q62 ->qe: " <<ch<< endl;
 				}
-				break;	
+				break;
+			case q63:
+				if (ch == '('){
+					Estado = q64;
+					cout<<"q63 -> q64 parentesis abiertos "<<ch<<endl,
+					parentesisAbiertos++;
+					palabra = "";
+				}else{
+					Estado = qe;
+					cout<<"q63 -> qe: "<<ch<<endl;
+				}
+				break;
+			case q64:
+				if (letraValida(ch)){
+					Estado = q65;
+					cout << "q64 -> q65"<<endl;
+					palabra += ch;
+				}else{
+					Estado = qe;
+					cout<<"q64 -> qe: "<<ch<<endl;
+				}
+				break;
+			case q65:
+				if(esDireccion(tabla,palabra,ch)==0){ //Si es la palabra reservada de <direccion>
+            		Estado = q58;
+            		palabra += ch;
+            		cout<<"q65->q58 Palabra reservada: "<<palabra<<endl;
+					palabra = "";
+				} else if(esParteMovimiento(tabla,palabra,ch)==0){
+					Estado = q66;
+            		palabra += ch;
+            		cout<<"q65->q66 Palabra reservada: "<<palabra<<endl;
+					palabra = "";
+				} else if(letraValida(ch)){
+					Estado = q65;
+					palabra += ch;
+				} else {
+					Estado = qe;
+					cout << "q65->qe: " <<ch<< endl;
+				}
+				break;
+			case q66:
+				if (ch == ','){
+					Estado = q67;
+					cout<<"q66->q67: "<<ch<<endl;
+				} else {
+					Estado = qe;
+					cout << "q66 ->qe: " <<ch<< endl;
+				}
+				break;
+			case q67:
+				if (letraValida(ch)){
+					Estado = q68;
+					cout << "q67 -> q68"<<endl;
+					palabra += ch;
+				}else{
+					Estado = qe;
+					cout<<"q67 -> qe: "<<ch<<endl;
+				}
+				break;
+			case q68:
+				if(esDireccion(tabla,palabra,ch)==0){ //Si es la palabra reservada de <direccion>
+            		Estado = q58;
+            		palabra += ch;
+            		cout<<"q68->q58 Palabra reservada: "<<palabra<<endl;
+					palabra = "";	
+				} else if(letraValida(ch)){
+					Estado = q68;
+					palabra += ch;
+				} else {
+					Estado = qe;
+					cout << "q68 ->qe: " <<ch<< endl;
+				}
+				break;
+			case q69:
+				if (ch == '@'){ //Verifica que cada bloque esté completo antes del final del programa.
+					if (llavesAbiertas == llavesCerradas){
+						Estado = q70;
+						cout<<"q69->q70 Final del archivo: "<<ch<<endl;
+					} else {
+						Estado = qe;
+						cout << "q69 ->qe: falta al menos una llave cerrada }" <<ch<< endl;
+					}
+					
+				} else if (ch == ';'){//Fin de linea para un bloque de repeticion o condision.
+					if (llavesAbiertas > llavesCerradas){
+						Estado = q2;
+						cout<<"q69->q2 fin de linea de bloque: "<<ch<<endl;
+					} else {
+						Estado = qe;
+						cout << "q69 ->qe: Existe un número igual o mayor de bloques cerrados. " <<ch<< endl;
+					}
+				} else {
+					Estado = qe;
+					cout << "q69 ->qe: " <<ch<< endl;
+				}
+				break;
 			}	
 		}
 

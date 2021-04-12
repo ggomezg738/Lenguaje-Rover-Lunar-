@@ -20,7 +20,7 @@ RoverLunar{
     repetir mientras (distanciaActual < distanciaFinal){
         i = 0;
         repetir mientras (i<3){
-            tomarCaptura; #Toma una foto
+            tomarCaptura;
             foto = foto + 1;
             girar(pedestal,izquierda,70); 
             i = i+1;
