@@ -6,6 +6,11 @@
 
 using namespace std;
 
+	string lista[50][2];
+
+	int n=1;
+	int m=0;
+
 //Valida si un caracter  es una letra valida.
 bool letraValida(char ch) {
   if (ch >= 'A' && ch <= 'Z' || ch >= 'a' && ch<= 'z'){
@@ -126,6 +131,40 @@ int esParteMovimiento(string tabla[2][30],string palabra,char ch){
 }
 
 
+		
+	void IngresoIdentificador(string palabra){
+		if(n>=49){
+			cout<<"Sin espacio.";
+		} else{
+			lista[n][0]=palabra;
+			n++;
+		}
+	}
+	
+	void IngresoTipo(string palabra){
+		lista[n][1]=palabra;
+	}
+	
+	void IngresoPalabraReservada(string palabra){
+		IngresoIdentificador(palabra);
+		palabra="Palabra reservada";
+		IngresoTipo(palabra);
+	}
+	
+	void MostrarLista(){
+		for(int i=0; i<50; i++){
+			cout<<endl;
+			for(int j=0; j<2; j++){
+				cout<<"      "<<lista[i][j]<<"     ";
+			}
+		}
+	}	
+	
+		
+		
+	
+
+
 
 
 int main() {
@@ -135,6 +174,9 @@ int main() {
 
     //vaiable estados
     TEstado Estado = q0;
+    
+    lista[0][0]="Identificadores";
+	lista[0][1]="Tipo";
     
     //Tabla de s�mbolos con las palabras reservadas y los identificadores
     //Donde los valores de tabla[0] ser�n las palabras reservadas y los de tabla[1]
@@ -190,6 +232,7 @@ int main() {
     int parentesisCerrados = 0;
     
     
+    
     //Lectura del archivo
 	fstream archivoEntrada;
 	archivoEntrada.open("programa.txt", ios::in);
@@ -227,6 +270,7 @@ int main() {
                     Estado = q2;
 					cout << "identificador primario: "<< palabra <<endl;
 					tabla[1][identificadores] = palabra;
+					IngresoIdentificador(palabra);
 					identificadores++;
 					palabra = ""; //Limpia la palabra.
 					cout<<"q1->q2: "<<ch<<endl;
@@ -256,46 +300,55 @@ int main() {
             		palabra += ch;
             		cout<<"q3->q4: "<<palabra<<" Declaracion de variable."<<endl;
 					palabrasReservadasVar++;
+					IngresoTipo(palabra);
 					palabra = "";
 				}else if(compararPalabra(tabla[0][1],palabra,ch)==0){ // girar
 					Estado = q59;
             		palabra += ch;
             		cout<<"q3->q59: "<<palabra<<" Palabra reservada."<<endl;
+            		IngresoPalabraReservada(palabra);
 					palabra = "";
 				}else if(compararPalabra(tabla[0][2],palabra,ch)==0){ // tomarCaptura
 					Estado = q12;
             		palabra += ch;
             		cout<<"q3->q12: "<<palabra<<" Palabra reservada."<<endl;
+            		IngresoPalabraReservada(palabra);
 					palabra = "";
 				}else if(compararPalabra(tabla[0][3],palabra,ch)==0 || compararPalabra(tabla[0][4],palabra,ch)==0){ //retraer o extender
 					Estado = q43;
             		palabra += ch;
             		cout<<"q3->q43: "<<palabra<<" Palabra reservada."<<endl;
+            		IngresoPalabraReservada(palabra);
 					palabra = "";
 				}else if(compararPalabra(tabla[0][5],palabra,ch)==0){ // inclinar
 					Estado = q53;
             		palabra += ch;
             		cout<<"q3->q53: "<<palabra<<" Palabra reservada."<<endl;
+            		IngresoPalabraReservada(palabra);
 					palabra = "";
 				}else if(compararPalabra(tabla[0][6],palabra,ch)==0){ // girar
 					Estado = q59;
             		palabra += ch;
             		cout<<"q3->q59: "<<palabra<<" Palabra reservada."<<endl;
+            		IngresoPalabraReservada(palabra);
 					palabra = "";
 				}else if(compararPalabra(tabla[0][7],palabra,ch)==0){ // desplazar
 					Estado = q63;
             		palabra += ch;
             		cout<<"q3->q63: "<<palabra<<" Palabra reservada."<<endl;
+            		IngresoPalabraReservada(palabra);
 					palabra = "";
 				}else if(compararPalabra(tabla[0][8],palabra,ch)==0){ // repetirmientras
 					Estado = q13;
             		palabra += ch;
             		cout<<"q3->q13: "<<palabra<<" Palabra reservada."<<endl;
+            		IngresoPalabraReservada(palabra);
 					palabra = "";
 				}else if(compararPalabra(tabla[0][9],palabra,ch)==0){ // si
 					Estado = q28;
             		palabra += ch;
             		cout<<"q3->q28: "<<palabra<<" Palabra reservada."<<endl;
+            		IngresoPalabraReservada(palabra);
 					palabra = "";																
 				}else if(letraValida(ch)){
                     Estado = q3;
@@ -334,6 +387,7 @@ int main() {
 						Estado = q6;
 						cout<<"q5->q6 Identificador creado:"<<palabra<<endl;
 						tabla[1][identificadores] = palabra;
+						IngresoIdentificador(palabra);
 						identificadores++;
 					} else {
 						Estado = qe;
@@ -464,12 +518,14 @@ int main() {
             		palabra += ch;
             		cout<<"q10->q11 Palabra reservada: "<<palabra<<endl;
 					palabrasReservadasTrue++;
+					IngresoPalabraReservada(palabra);
 					palabra = "";	
 				} else if(palabraReservadaBool(tabla,palabra,ch)==0){ //Si es la palbra false
 					Estado = q11;
             		palabra += ch;
             		cout<<"q10->q11 Palabra reservada: "<<palabra<<endl;
 					palabrasReservadasTrue++;
+					IngresoPalabraReservada(palabra);
 					palabra = "";	
 				} else if(letraValida(ch)){
 					Estado = q10;
@@ -780,12 +836,14 @@ int main() {
             		palabra += ch;
             		cout<<"q24->q27 Palabra reservada: "<<palabra<<endl;
 					palabrasReservadasTrue++;
+					IngresoPalabraReservada(palabra);
 					palabra = "";	
 				} else if(palabraReservadaBool(tabla,palabra,ch)==0){ //Si es la palbra false
 					Estado = q27;
             		palabra += ch;
             		cout<<"q10->q11 Palabra reservada: "<<palabra<<endl;
 					palabrasReservadasTrue++;
+					IngresoPalabraReservada(palabra);
 					palabra = "";	
 				} else if(letraValida(ch)){
 					Estado = q24;
@@ -1172,12 +1230,14 @@ int main() {
             		palabra += ch;
             		cout<<"q39->q41 Palabra reservada: "<<palabra<<endl;
 					palabrasReservadasTrue++;
+					IngresoPalabraReservada(palabra);
 					palabra = "";	
 				} else if(palabraReservadaBool(tabla,palabra,ch)==0){ //Si es la palbra false
 					Estado = q41;
             		palabra += ch;
             		cout<<"q39->q41 Palabra reservada: "<<palabra<<endl;
 					palabrasReservadasTrue++;
+					IngresoPalabraReservada(palabra);
 					palabra = "";	
 				} else if(letraValida(ch)){
 					Estado = q39;
@@ -1312,6 +1372,7 @@ int main() {
             		Estado = q46;
             		palabra += ch;
             		cout<<"q45->q46 Palabra reservada: "<<palabra<<endl;
+            		IngresoPalabraReservada(palabra);
 					palabra = "";	
 				} else if(letraValida(ch)){
 					Estado = q45;
@@ -1512,6 +1573,7 @@ int main() {
             		Estado = q56;
             		palabra += ch;
             		cout<<"q55->q56 Palabra reservada: "<<palabra<<endl;
+            		IngresoPalabraReservada(palabra);
 					palabra = "";	
 				} else if(letraValida(ch)){
 					Estado = q55;
@@ -1545,6 +1607,7 @@ int main() {
             		Estado = q58;
             		palabra += ch;
             		cout<<"q57->q58 Palabra reservada: "<<palabra<<endl;
+            		IngresoPalabraReservada(palabra);
 					palabra = "";	
 				} else if(letraValida(ch)){
 					Estado = q57b;
@@ -1589,6 +1652,7 @@ int main() {
             		Estado = q62;
             		palabra += ch;
             		cout<<"q61->q62 Palabra reservada: "<<palabra<<endl;
+            		IngresoPalabraReservada(palabra);
 					palabra = "";	
 				} else if(letraValida(ch)){
 					Estado = q61;
@@ -1633,11 +1697,13 @@ int main() {
             		Estado = q58;
             		palabra += ch;
             		cout<<"q65->q58 Palabra reservada: "<<palabra<<endl;
+            		IngresoPalabraReservada(palabra);
 					palabra = "";
 				} else if(esParteMovimiento(tabla,palabra,ch)==0){
 					Estado = q66;
             		palabra += ch;
             		cout<<"q65->q66 Palabra reservada: "<<palabra<<endl;
+            		IngresoPalabraReservada(palabra);
 					palabra = "";
 				} else if(letraValida(ch)){
 					Estado = q65;
@@ -1671,6 +1737,7 @@ int main() {
             		Estado = q58;
             		palabra += ch;
             		cout<<"q68->q58 Palabra reservada: "<<palabra<<endl;
+            		IngresoPalabraReservada(palabra);
 					palabra = "";	
 				} else if(letraValida(ch)){
 					Estado = q68;
@@ -1714,6 +1781,7 @@ int main() {
 	cout<< "Total parentesis cerrados: "<<parentesisCerrados<<endl;
 	
 	cout<<"Total variables creadas: "<<identificadores<<endl;
+	MostrarLista();
 	
 	archivoEntrada.close();
 	return 0;
