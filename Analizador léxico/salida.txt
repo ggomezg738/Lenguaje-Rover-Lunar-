@@ -49,28 +49,3 @@ i
       pedestal           Palabra reservada     
       derecha           Palabra reservada     
       repetirmientras           var     
-      repetirmientras           Palabra reservada     
-      tomarCaptura           Palabra reservada     
-      girar           Palabra reservada     
-      pedestal           Palabra reservada     
-      izquierda           Palabra reservada     
-      girar           Palabra reservada     
-      pedestal           Palabra reservada     
-      derecha           Palabra reservada     
-      desplazar           Palabra reservada     
-      adelante           Palabra reservada     
-      si           Palabra reservada     
-                 Palabra reservada     
-                      
-                      
-                      
-                      
-                      
-                      
-                      
-                      
-                      
-                      
-                      
-                      
-                      

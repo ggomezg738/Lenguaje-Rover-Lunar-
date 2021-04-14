@@ -3,10 +3,16 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <string>
+#include <sstream>
 
 using namespace std;
 
-	string lista[50][2];
+	string lista[50][3];
+	/*
+	string TablaSimbolo[25][3];
+	stringstream ss;
+	*/
 
 	int n=1;
 	int m=0;
@@ -134,8 +140,8 @@ int esParteMovimiento(string tabla[2][30],string palabra,char ch){
 		
 	void IngresoIdentificador(string palabra){
 		if(n>=49){
-			cout<<"Sin espacio.";
-		} else{
+			cout<<"No hay espacio";
+		} else {
 			lista[n][0]=palabra;
 			n++;
 		}
@@ -150,6 +156,70 @@ int esParteMovimiento(string tabla[2][30],string palabra,char ch){
 		palabra="Palabra reservada";
 		IngresoTipo(palabra);
 	}
+	
+	string ContadorConvert(int contador){
+		
+	}
+	
+	/*
+	void tabla_simbolo(){
+		int x=1;
+		int y=0;
+		int contador=0;
+		for (int i=1; i<25; i++){
+			string palabra = lista[i][0];
+			string tipo = lista[i][1];
+			int result=-1;
+			for (int i=0; i<50; i++){
+				result = lista[0][i].compare(palabra);
+				if (result=0){
+					contador++;
+					result=-1;
+				}
+			}
+			if(contador=0){
+				TablaSimbolo[x][y]=palabra;
+				y++;
+				TablaSimbolo[x][y]=tipo;
+				y++;
+				ss << contador;
+				string cadena = ss.str();
+				
+				string cadena = static_cast<string>(&(ostringstream() << contador))->str();
+				
+				TablaSimbolo[x][y]=cadena;
+				x++;
+				y=0;
+			} else{
+				for(int i=1; i<x; i++){
+					int result = TablaSimbolo[i][0].compare(palabra);
+					if(result==0){
+						ss << contador;
+						string cadena = ss.str();
+						
+						string cadena = static_cast(&(ostringstream() << contador))->str();
+						
+						TablaSimbolo[i][2]=cadena;
+						result=-1;
+					}
+				}
+			}
+			
+		}
+	}
+	*/
+	
+	
+	/*
+	void MotrarTablaSimbolo(){
+		for(int i=0; i<50; i++){
+			cout<<endl;
+			for(int j=0; j<2; j++){
+				cout<<"      "<<TablaSimbolo[i][j]<<"     ";
+			}		
+		}
+	}
+	*/
 	
 	void MostrarLista(){
 		for(int i=0; i<50; i++){
@@ -179,6 +249,12 @@ int main() {
     
     lista[0][0]="Identificadores";
 	lista[0][1]="Tipo";
+	
+	/*
+	TablaSimbolo[0][0]="IDENTIFICADOR";
+	TablaSimbolo[0][1]="TIPO";
+	TablaSimbolo[0][2]="CANTIDAD";
+	*/
     
     //Tabla de s�mbolos con las palabras reservadas y los identificadores
     //Donde los valores de tabla[0] ser�n las palabras reservadas y los de tabla[1]
@@ -1910,7 +1986,7 @@ int main() {
 	salida<<"---------------------------------------"<<endl;
 	
 	salida<<"------------Lista de Variables y Palabras Reservadas----------"<<endl;
-	for(int i=0; i<50; i++){
+	for(int i=0; i<25; i++){
 		salida<<endl;
 		for(int j=0; j<2; j++){
 			salida<<"      "<<lista[i][j]<<"     ";
