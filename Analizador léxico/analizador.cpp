@@ -169,7 +169,9 @@ int esParteMovimiento(string tabla[2][30],string palabra,char ch){
 
 int main() {
 	
-	//tipo de dato estados
+	//Tipo de dato estados.
+	//El estado qe significa que resivio un caracter incorrecto y paso a estado de error.
+	//El estado q70 es el estado final.
     enum TEstado {q0,q1,q2,q3,q4,q5,q6,q7,q8,q9,q10,q11,q12,q13,q14,q15,q16,q17,q18,q19,q20,q21,q22,q23,q24,q25,q26,q27,q28,q29,q30,q31,q32,q33,q34,q35,q36,q37,q38a,q38b,q39,q40,q41,q42,q43,q44,q45,q46,q47,q48,q49,q50,q51,q52,q53,q54,q55,q56,q57a,q57b,q58,q59,q60,q61,q62,q63,q64,q65,q66,q67,q68,q69,q70,qe};
 
     //vaiable estados
@@ -215,16 +217,25 @@ int main() {
     
     //Contadores
 	int identificadores = 0; //Para las variables definidas.
-	bool creandoVariable = false; //Si se esta definiendo un identificador.
 	
-	int palabrasReservadasVar = 0;
-	int palabrasReservadasTrue = 0;
-	int palabrasReservadasFalse = 0;
+	//int palabrasReservadasVar = 0;
+	//int palabrasReservadasTrue = 0;
+	//int palabrasReservadasFalse = 0;
 	
 	int operadoresSuma = 0;
 	int operadoresResta = 0;
 	int operadoresMultiplicacion = 0;
 	int operadoresDivision = 0;
+	
+	int signoMenor = 0;
+	int signoMayor = 0;
+	int signoIgual = 0;
+
+	int signoAdmiracion = 0;
+
+	int punto = 0;
+	int puntoComa = 0;
+	int coma = 0;
 	
     int llavesAbiertas = 0;
     int llavesCerradas = 0;
@@ -235,7 +246,7 @@ int main() {
     
     //Lectura del archivo
 	fstream archivoEntrada;
-	archivoEntrada.open("programa.txt", ios::in);
+	archivoEntrada.open("entrada.txt", ios::in);
 	if (!archivoEntrada) {
 		cout << "No se encontro el archivo";
 	} else {
@@ -299,7 +310,6 @@ int main() {
             		Estado = q4;
             		palabra += ch;
             		cout<<"q3->q4: "<<palabra<<" Declaracion de variable."<<endl;
-					palabrasReservadasVar++;
 					IngresoTipo(palabra);
 					palabra = "";
 				}else if(compararPalabra(tabla[0][1],palabra,ch)==0){ // girar
@@ -358,6 +368,7 @@ int main() {
 						Estado = q6;
 						cout<<"q3->q6: "<<ch<<endl;
 						cout<<"Asignando valor al identificador: "<<palabra<<endl;
+						signoIgual++;
 					} else {
 						Estado = qe;
                 		cout << "q3 -> qe: "<<palabra<<" No esta definido." <<endl;
@@ -389,6 +400,7 @@ int main() {
 						tabla[1][identificadores] = palabra;
 						IngresoIdentificador(palabra);
 						identificadores++;
+						signoIgual++;
 					} else {
 						Estado = qe;
 						cout << "q5 ->qe ya existe un identificador: "<<palabra<< endl;
@@ -401,6 +413,7 @@ int main() {
 						cout << "Fin de linea."<<endl;
 						tabla[1][identificadores] = palabra;
 						identificadores++;
+						puntoComa++;
 					} else {
 						Estado = qe;
 						cout << "q5 ->qe ya existe un identificador: "<<palabra<< endl;
@@ -441,6 +454,7 @@ int main() {
 					Estado = q8;
 					palabra += ch;
 					cout << "Numero decimal." << endl;
+					punto++;
 				} else if (ch == '+'){
 					Estado = q6;
 					cout << "Operacion de suma al numero: "<<palabra<<endl;
@@ -465,6 +479,7 @@ int main() {
 					Estado = q2;
 					cout << "Fin de linea, valor asignado: "<<palabra<<endl;
 					palabra = "";
+					puntoComa++;
 				} else {
 					Estado = qe;
 					cout << "q7 -> qe Se esperaba [<digito>,+,-,*,/,;]"<<ch << endl;
@@ -507,6 +522,7 @@ int main() {
 					Estado = q2;
 					cout << "q9 Fin de linea. "<<palabra<<endl;
 					palabra = "";
+					puntoComa++;
 				} else {
 					Estado = qe;
 					cout << "q9 -> qe Se esperaba [<digito>,+,-,*,/,;,.] "<<ch << endl;
@@ -517,14 +533,12 @@ int main() {
             		Estado = q11;
             		palabra += ch;
             		cout<<"q10->q11 Palabra reservada: "<<palabra<<endl;
-					palabrasReservadasTrue++;
 					IngresoPalabraReservada(palabra);
 					palabra = "";	
 				} else if(palabraReservadaBool(tabla,palabra,ch)==0){ //Si es la palbra false
 					Estado = q11;
             		palabra += ch;
             		cout<<"q10->q11 Palabra reservada: "<<palabra<<endl;
-					palabrasReservadasTrue++;
 					IngresoPalabraReservada(palabra);
 					palabra = "";	
 				} else if(letraValida(ch)){
@@ -554,6 +568,7 @@ int main() {
 					if(esReservada(tabla,palabra)!=0){
 						Estado = q2;
 						cout << "q10 Fin de linea. "<<palabra<<endl;
+						puntoComa++;
 					}else{
 						Estado  = qe;
 						cout<< "q10 -> qe: "<<palabra<<" Es una palabra reservada."<<endl;
@@ -570,6 +585,7 @@ int main() {
 					Estado = q2;
 					cout << "q11 Fin de linea."<<endl;
 					palabra = "";
+					puntoComa++;
 				} else {
 					Estado = qe;
 					cout << "q11 -> qe Se esperaba [;]" <<ch<< endl;
@@ -580,6 +596,7 @@ int main() {
 					Estado = q2;
 					cout << "q12 Fin de linea."<<endl;
 					palabra = "";
+					puntoComa++;
 				} else {
 					Estado = qe;
 					cout << "q12 -> qe Se esperaba [;]" <<ch<< endl;
@@ -624,6 +641,7 @@ int main() {
 					Estado = q16;
 					palabra += ch;
 					cout << "Numero decimal." << endl;
+					punto++;
 				} else if (ch == '+'){
 					Estado = q14;
 					cout << "Operacion de suma al numero: "<<palabra<<endl;
@@ -649,11 +667,22 @@ int main() {
 					cout << "q15 Inicio de operador booleano despues de: "<<palabra<<endl;
 					palabra = "";
 					palabra += ch;
+					if (ch == '='){
+						signoIgual++;
+					} else {
+						signoAdmiracion++;
+					}
+					
 				} else if (ch == '<' || ch == '>'){
 					Estado = q25;
 					cout << "q15 Inicio de operador booleano despues de: "<<palabra<<endl;
 					palabra = "";
 					palabra += ch;
+					if (ch == '<'){
+						signoMenor++;
+					} else {
+						signoMayor++;
+					}
 				} else {
 					Estado = qe;
 					cout << "q15 -> qe: "<<ch<<endl;
@@ -697,11 +726,21 @@ int main() {
 					cout << "q17 Inicio de operador booleano despues de: "<<palabra<<endl;
 					palabra = "";
 					palabra += ch;
+					if (ch == '='){
+						signoIgual++;
+					} else {
+						signoAdmiracion++;
+					}
 				} else if (ch == '<' || ch == '>'){
 					Estado = q25;
 					cout << "q17 Inicio de operador booleano despues de: "<<palabra<<endl;
 					palabra = "";
 					palabra += ch;
+					if (ch == '<'){
+						signoMenor++;
+					} else {
+						signoMayor++;
+					}
 				} else {
 					Estado = qe;
 					cout << "q17 -> qe: "<<ch<<endl;
@@ -713,6 +752,7 @@ int main() {
 					palabra += ch;
 					cout << "q18 -> q19 Operador booleano: "<<palabra<<endl;
 					palabra = "";
+					signoIgual++;
 				}else{
 					Estado = qe;
 					cout << "q18 -> qe: "<<ch<<endl;
@@ -746,6 +786,7 @@ int main() {
 					Estado = q21;
 					palabra += ch;
 					cout << "Numero decimal." << endl;
+					punto++;
 				} else if (ch == '+'){
 					Estado = q19;
 					cout << "Operacion de suma al numero: "<<palabra<<endl;
@@ -835,14 +876,12 @@ int main() {
             		Estado = q27;
             		palabra += ch;
             		cout<<"q24->q27 Palabra reservada: "<<palabra<<endl;
-					palabrasReservadasTrue++;
 					IngresoPalabraReservada(palabra);
 					palabra = "";	
 				} else if(palabraReservadaBool(tabla,palabra,ch)==0){ //Si es la palbra false
 					Estado = q27;
             		palabra += ch;
             		cout<<"q10->q11 Palabra reservada: "<<palabra<<endl;
-					palabrasReservadasTrue++;
 					IngresoPalabraReservada(palabra);
 					palabra = "";	
 				} else if(letraValida(ch)){
@@ -874,11 +913,21 @@ int main() {
 						cout << "q24 -> q18 Inicio de operador booleano " <<ch<< " despues de: "<<palabra<<endl;
 						palabra = "";
 						palabra += ch;
+						if (ch == '='){
+							signoIgual++;
+						} else {
+							signoAdmiracion++;
+						}
 					} else if (ch == '<' || ch == '>'){
 						Estado = q25;
 						cout << "q24 -> q18 Inicio de operador booleano " <<ch<< " despues de: "<<palabra<<endl;
 						palabra = "";
 						palabra += ch;
+						if (ch == '<'){
+						signoMenor++;
+						} else {
+							signoMayor++;
+						}
 					} else {
 						
 					}
@@ -1005,6 +1054,7 @@ int main() {
 					Estado = q31;
 					palabra += ch;
 					cout << "Numero decimal." << endl;
+					punto++;
 				} else if (ch == '+'){
 					Estado = q29;
 					cout << "Operacion de suma al numero: "<<palabra<<endl;
@@ -1030,11 +1080,21 @@ int main() {
 					cout << "q30 Inicio de operador booleano despues de: "<<palabra<<endl;
 					palabra = "";
 					palabra += ch;
+					if (ch == '='){
+						signoIgual++;
+					} else {
+						signoAdmiracion++;
+					}
 				} else if (ch == '<' || ch == '>'){
 					Estado = q40;
 					cout << "q30 Inicio de operador booleano despues de: "<<palabra<<endl;
 					palabra = "";
 					palabra += ch;
+					if (ch == '<'){
+						signoMenor++;
+					} else {
+						signoMayor++;
+					}
 				} else {
 					Estado = qe;
 					cout << "q30 -> qe: "<<ch<<endl;
@@ -1078,11 +1138,21 @@ int main() {
 					cout << "q32 Inicio de operador booleano despues de: "<<palabra<<endl;
 					palabra = "";
 					palabra += ch;
+					if (ch == '='){
+						signoIgual++;
+					} else {
+						signoAdmiracion++;
+					}
 				} else if (ch == '<' || ch == '>'){
 					Estado = q40;
 					cout << "q32 Inicio de operador booleano despues de: "<<palabra<<endl;
 					palabra = "";
 					palabra += ch;
+					if (ch == '<'){
+						signoMenor++;
+					} else {
+						signoMayor++;
+					}
 				} else {
 					Estado = qe;
 					cout << "q32 -> qe: "<<ch<<endl;
@@ -1094,6 +1164,7 @@ int main() {
 					palabra += ch;
 					cout << "q33 -> q34 Operador booleano: "<<palabra<<endl;
 					palabra = "";
+					signoIgual++;
 				}else{
 					Estado = qe;
 					cout << "q33 -> qe: "<<ch<<endl;
@@ -1127,6 +1198,7 @@ int main() {
 					Estado = q36;
 					palabra += ch;
 					cout << "Numero decimal." << endl;
+					punto++;
 				} else if (ch == '+'){
 					Estado = q34;
 					cout << "Operacion de suma al numero: "<<palabra<<endl;
@@ -1229,14 +1301,14 @@ int main() {
             		Estado = q41;
             		palabra += ch;
             		cout<<"q39->q41 Palabra reservada: "<<palabra<<endl;
-					palabrasReservadasTrue++;
+					
 					IngresoPalabraReservada(palabra);
 					palabra = "";	
 				} else if(palabraReservadaBool(tabla,palabra,ch)==0){ //Si es la palbra false
 					Estado = q41;
             		palabra += ch;
             		cout<<"q39->q41 Palabra reservada: "<<palabra<<endl;
-					palabrasReservadasTrue++;
+					
 					IngresoPalabraReservada(palabra);
 					palabra = "";	
 				} else if(letraValida(ch)){
@@ -1268,11 +1340,21 @@ int main() {
 						cout << "q39->q33 Inicio de operador booleano despues de: "<<palabra<<endl;
 						palabra = "";
 						palabra += ch;
+						if (ch == '='){
+							signoIgual++;
+						} else {
+							signoAdmiracion++;
+						}
 					} else if (ch == '<' || ch == '>'){
 						Estado = q40;
 						cout << "q39->q40 Inicio de operador booleano despues de: "<<palabra<<endl;
 						palabra = "";
 						palabra += ch;
+						if (ch == '<'){
+							signoMenor++;
+						} else {
+							signoMayor++;
+						}
 					} else {
 						
 					}
@@ -1386,6 +1468,7 @@ int main() {
 				if (ch == ','){
 					Estado = q47;
 					cout<<"q46->q47: "<<ch<<endl;
+					coma++;
 				} else {
 					Estado = qe;
 					cout << "q46 ->qe: " <<ch<< endl;
@@ -1423,6 +1506,7 @@ int main() {
 					Estado = q49;
 					palabra += ch;
 					cout << "q48 -> q49 Numero decimal." << endl;
+					punto++;
 				} else if (ch == '+'){
 					Estado = q47;
 					cout << "Operacion de suma al numero: "<<palabra<<endl;
@@ -1501,6 +1585,7 @@ int main() {
 					Estado = q2;
 					cout << "q51 Fin de linea."<<endl;
 					palabra = "";
+					puntoComa++;
 				} else {
 					Estado = qe;
 					cout << "q51 -> qe Se esperaba [;]" <<ch<< endl;
@@ -1587,6 +1672,7 @@ int main() {
 				if (ch == ','){
 					Estado = q57a;
 					cout<<"q56->q57: "<<ch<<endl;
+					coma++;
 				} else {
 					Estado = qe;
 					cout << "q56 ->qe: " <<ch<< endl;
@@ -1621,6 +1707,7 @@ int main() {
 				if (ch == ','){
 					Estado = q47;
 					cout<<"q58->q47: "<<ch<<endl;
+					coma++;
 				} else {
 					Estado = qe;
 					cout << "q58 ->qe: " <<ch<< endl;
@@ -1666,6 +1753,7 @@ int main() {
 				if (ch == ','){
 					Estado = q57a;
 					cout<<"q62->q57: "<<ch<<endl;
+					coma++;
 				} else {
 					Estado = qe;
 					cout << "q62 ->qe: " <<ch<< endl;
@@ -1717,6 +1805,7 @@ int main() {
 				if (ch == ','){
 					Estado = q67;
 					cout<<"q66->q67: "<<ch<<endl;
+					coma++;
 				} else {
 					Estado = qe;
 					cout << "q66 ->qe: " <<ch<< endl;
@@ -1761,6 +1850,7 @@ int main() {
 					if (llavesAbiertas > llavesCerradas){
 						Estado = q2;
 						cout<<"q69->q2 fin de linea de bloque: "<<ch<<endl;
+						puntoComa++;
 					} else {
 						Estado = qe;
 						cout << "q69 ->qe: Existe un número igual o mayor de bloques cerrados. " <<ch<< endl;
@@ -1774,16 +1864,62 @@ int main() {
 		}
 
 	}
-	
+	archivoEntrada.close();
 	cout<< "Total llaves abiertas: " <<llavesAbiertas<<endl;
 	cout<< "Total llaves cerradas: " <<llavesCerradas<<endl;
 	cout<< "Total parentesis abiertos: "<<parentesisAbiertos<<endl;
 	cout<< "Total parentesis cerrados: "<<parentesisCerrados<<endl;
-	
+	cout<< "Total signos =: " <<signoIgual<<endl;
+	cout<< "Total signos !: " <<signoAdmiracion<<endl;
+	cout<< "Total signos +: " <<operadoresSuma<<endl;
+	cout<< "Total signos -: " <<operadoresResta<<endl;
+	cout<< "Total signos /: " <<operadoresDivision<<endl;
+	cout<< "Total signos *: " <<operadoresMultiplicacion<<endl;
+	cout<< "Total signos <: " <<signoMenor<<endl;
+	cout<< "Total signos >: " <<signoMayor<<endl;
+	cout<< "Total signos ; (fin de linea): " <<puntoComa<<endl;
+	cout<< "Total signos .: " <<punto<<endl;
+	cout<< "Total signos ,: " <<coma<<endl;
+
 	cout<<"Total variables creadas: "<<identificadores<<endl;
 	MostrarLista();
 	
-	archivoEntrada.close();
+	//Escritura del archivo de salida
+	ofstream salida;
+	salida.open("salida.txt");
+	salida<< "Total llaves abiertas: " <<llavesAbiertas<<endl;
+	salida<< "Total llaves cerradas: " <<llavesCerradas<<endl;
+	salida<< "Total parentesis abiertos: "<<parentesisAbiertos<<endl;
+	salida<< "Total parentesis cerrados: "<<parentesisCerrados<<endl;
+	salida<< "Total signos =: " <<signoIgual<<endl;
+	salida<< "Total signos !: " <<signoAdmiracion<<endl;
+	salida<< "Total signos +: " <<operadoresSuma<<endl;
+	salida<< "Total signos -: " <<operadoresResta<<endl;
+	salida<< "Total signos /: " <<operadoresDivision<<endl;
+	salida<< "Total signos *: " <<operadoresMultiplicacion<<endl;
+	salida<< "Total signos <: " <<signoMenor<<endl;
+	salida<< "Total signos >: " <<signoMayor<<endl;
+	salida<< "Total signos ; (fin de linea): " <<puntoComa<<endl;
+	salida<< "Total signos .: " <<punto<<endl;
+	salida<< "Total signos ,: " <<coma<<endl;
+	salida<<"Total variables creadas: "<<identificadores<<endl;
+	salida<<"------------Variables Creadas----------"<<endl;
+	for (int i = 0; i < identificadores; i++){
+		salida<<tabla[1][i]<<endl;
+	}
+	salida<<"---------------------------------------"<<endl;
+	
+	salida<<"------------Lista de Variables y Palabras Reservadas----------"<<endl;
+	for(int i=0; i<50; i++){
+		salida<<endl;
+		for(int j=0; j<2; j++){
+			salida<<"      "<<lista[i][j]<<"     ";
+		}
+	}
+	
+	salida.close();
+
+	
 	return 0;
 }
 

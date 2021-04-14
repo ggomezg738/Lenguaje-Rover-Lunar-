@@ -1,0 +1,76 @@
+Total llaves abiertas: 4
+Total llaves cerradas: 4
+Total parentesis abiertos: 13
+Total parentesis cerrados: 13
+Total signos =: 10
+Total signos !: 0
+Total signos +: 3
+Total signos -: 0
+Total signos /: 0
+Total signos *: 0
+Total signos <: 2
+Total signos >: 0
+Total signos ; (fin de linea): 24
+Total signos .: 2
+Total signos ,: 17
+Total variables creadas: 6
+------------Variables Creadas----------
+RoverLunar
+distanciaFinal
+distanciaActual
+foto
+mensaje
+i
+---------------------------------------
+------------Lista de Variables y Palabras Reservadas----------
+
+      Identificadores           Tipo     
+      RoverLunar                
+      distanciaFinal           var     
+      distanciaActual           var     
+      foto           var     
+      girar           var     
+      brazoA           Palabra reservada     
+      izquierda           Palabra reservada     
+      girar           Palabra reservada     
+      brazoB           Palabra reservada     
+      izquierda           Palabra reservada     
+      desplazar           Palabra reservada     
+      adelante           Palabra reservada     
+      girar           Palabra reservada     
+      brazoA           Palabra reservada     
+      derecha           Palabra reservada     
+      girar           Palabra reservada     
+      brazoB           Palabra reservada     
+      derecha           Palabra reservada     
+      extender           Palabra reservada     
+      pedestal           Palabra reservada     
+      girar           Palabra reservada     
+      pedestal           Palabra reservada     
+      derecha           Palabra reservada     
+      repetirmientras           var     
+      repetirmientras           Palabra reservada     
+      tomarCaptura           Palabra reservada     
+      girar           Palabra reservada     
+      pedestal           Palabra reservada     
+      izquierda           Palabra reservada     
+      girar           Palabra reservada     
+      pedestal           Palabra reservada     
+      derecha           Palabra reservada     
+      desplazar           Palabra reservada     
+      adelante           Palabra reservada     
+      si           Palabra reservada     
+                 Palabra reservada     
+                      
+                      
+                      
+                      
+                      
+                      
+                      
+                      
+                      
+                      
+                      
+                      
+                      
